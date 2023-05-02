@@ -84,8 +84,8 @@ window.addEventListener("load", function() {
         if (filetitle.textContent != "Unknown Artist - " + files[0].name) {
             filetitle.textContent = "Unknown Artist - " + files[0].name;
         };
-        if (album.style.backgroundImage != "url(https://captian-obvious.github.io/Media-Player-V2/images/default/default-album-icon.png") {
-            album.style.backgroundImage = "url(https://captian-obvious.github.io/Media-Player-V2/images/default/default-album-icon.png)";
+        if (album.style.backgroundImage != "url(../../images/default/default-album-icon.png") {
+            album.style.backgroundImage = "url(../../images/default/default-album-icon.png)";
         };
         ID3.read(files[0], {
             onSuccess: function(tag) {
@@ -160,8 +160,8 @@ window.addEventListener("load", function() {
                 ctx.translate(centerX, centerY);
                 ctx.rotate(90 + i * ((Math.PI * 2) / bufferLength));
                 var r = 255;
-                var g = (255 / dataArray[i]);
-                var b = (255 / dataArray[i]);
+                var g = (255 - dataArray[i]);
+                var b = (255 - dataArray[i]);
                 ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")"; /*ctx.fillRect(0,0+rad, barWidth, barHeight/4.3)*/
                 ctx.fillRect(0, 0 + rad, barWidth, barHeight);
                 ctx.fillStyle = "rgb(255,255,255)"; /*ctx.fillRect(0,0+rad+barHeight/4.3, barWidth, 1)*/
