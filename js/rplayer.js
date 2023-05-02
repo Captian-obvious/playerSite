@@ -1,3 +1,4 @@
+const ID3 = window.jsmediatags
 const sin = Math.sin;
 const π = Math.PI;
 var urlParameter = false;
