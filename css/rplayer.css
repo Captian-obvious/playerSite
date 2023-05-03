@@ -13,6 +13,11 @@
     cursor: pointer;
     color: #980000;
 }
+#img2 {
+  position:absolute;
+  animation: upDown 1.5s alternate infinite ease-in-out;
+  width:100%;
+}
 #thefile {
     position: fixed;
     top: 0px;
