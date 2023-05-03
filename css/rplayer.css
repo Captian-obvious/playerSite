@@ -21,7 +21,12 @@
     width:100%;
 }
 @keyframes upDown {
-  to { transform: translatey(80%);}
+    0% {
+        top: 0%;
+    }
+    100% {
+        top: 50%;
+    }
 }
 #thefile {
     position: fixed;
