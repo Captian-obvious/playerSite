@@ -22,10 +22,10 @@
 }
 @keyframes upDown {
     0% {
-        top: 0%;
+        top: -30%;
     }
     100% {
-        top: 50%;
+        top: 30%;
     }
 }
 #thefile {
