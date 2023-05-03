@@ -96,14 +96,15 @@
   height: 100%;
 }
 .icon-volume {
-  background-image: url("https://captian-obvious.github.io/Media-Player-V2/images/default/volume_icon.svg");
-  left: 151px;
+    background-image: url("../images/default/volume_icon.svg");
+    left:191px;
 }
 #volume {
-  width: 15px;
-  height: 70px;
-  position: fixed;
-  top: 60px;
-  left: 156px;
-  -webkit-appearance: slider-vertical;
+    width: 15px;
+    height: 70px;
+    position: fixed;
+    top:90px;
+    left: 196px;
+    -webkit-appearance: slider-vertical;
+    color: #980000;
 }
