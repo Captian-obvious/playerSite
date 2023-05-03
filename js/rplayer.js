@@ -150,6 +150,7 @@ window.addEventListener("load", function() {
             var time = formatTime(audio.duration);
             position.innerHTML = curtime + " / " + time;
             loud = getRMS(dataArray);
+            animate(img,canvas,ctx)
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
             ctx.fillStyle = "#000000";
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
