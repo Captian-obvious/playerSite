@@ -150,8 +150,8 @@ window.addEventListener("load", function() {
             var time = formatTime(audio.duration);
             position.innerHTML = curtime + " / " + time;
             loud = getRMS(dataArray);
-            animate(img,canvas,ctx)
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
+            animate(img,canvas,ctx,new Date().getTime())
             ctx.fillStyle = "#000000";
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
             let rad = loud / 7;
