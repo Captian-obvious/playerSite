@@ -75,6 +75,7 @@ window.addEventListener("load", function() {
     };
     file.onchange = function() {
         var files = this.files;
+        var img
         var colorValue = "#ff0000";
         dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[0]));
         var SRC = dataimage.getAttribute("data-mediathumb-url");
@@ -101,6 +102,7 @@ window.addEventListener("load", function() {
                     };
                     var url = "data:" + format + ";base64," + window.btoa(str);
                     album.style.backgroundImage = "url(" + url + ")";
+                    img = draw(url)
                 };
                 if (title != "" && artist != "") {
                     filetitle.textContent = artist + " - " + title;
