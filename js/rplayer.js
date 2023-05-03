@@ -102,7 +102,7 @@ window.addEventListener("load", function() {
                     };
                     var url = "data:" + format + ";base64," + window.btoa(str);
                     album.style.backgroundImage = "url(" + url + ")";
-                    img = draw(url)
+                    img = draw(url);
                 };
                 if (title != "" && artist != "") {
                     filetitle.textContent = artist + " - " + title;
@@ -151,7 +151,8 @@ window.addEventListener("load", function() {
             position.innerHTML = curtime + " / " + time;
             loud = getRMS(dataArray);
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
-            animate(img,canvas,ctx,new Date().getTime())
+            var time = new Date().getTime();
+            animate(img,canvas,ctx,time);
             ctx.fillStyle = "#000000";
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
             let rad = loud / 7;
