@@ -164,7 +164,7 @@ window.addEventListener("load", function() {
                 var b = (255 - dataArray[i]);
                 ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")"; /*ctx.fillRect(0,0+rad, barWidth, barHeight/4.3)*/
                 ctx.fillRect(0, 0 + rad, barWidth, barHeight);
-                ctx.fillStyle = "rgb(255,255,255)"; /*ctx.fillRect(0,0+rad+barHeight/4.3, barWidth, 1)*/
+                ctx.fillStyle = "rgb(255,0,0)"; /*ctx.fillRect(0,0+rad+barHeight/4.3, barWidth, 1)*/
                 ctx.fillRect(0, 0 + rad + barHeight, barWidth, 1);
                 ctx.restore();
             };
