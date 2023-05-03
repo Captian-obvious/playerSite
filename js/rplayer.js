@@ -59,6 +59,7 @@ window.addEventListener("load", function() {
     console.log(audio);
     var dur = document.getElementById("MediaPlayerControl-seekbar");
     var album = document.getElementById("album");
+    var album2 = document.getElementById("img2");
     var dataimage = document.getElementById("MediaPlayerIcon-icon-play");
     var button = document.getElementById("MediaPlayerIcon-icon-play");
     var position = document.getElementById("time-position");
@@ -87,6 +88,7 @@ window.addEventListener("load", function() {
         if (album.style.backgroundImage != "url(../../images/default/default-album-icon.png") {
             album.style.backgroundImage = "url(../../images/default/default-album-icon.png)";
         };
+        var hasBackground = true;
         ID3.read(files[0], {
             onSuccess: function(tag) {
                 console.log(tag);
@@ -101,6 +103,8 @@ window.addEventListener("load", function() {
                     };
                     var url = "data:" + format + ";base64," + window.btoa(str);
                     album.style.backgroundImage = "url(" + url + ")";
+                    album2.src = url;
+                    hasBackground = false;
                 };
                 if (title != "" && artist != "") {
                     filetitle.textContent = artist + " - " + title;
@@ -108,6 +112,7 @@ window.addEventListener("load", function() {
             },
             onError: function(error) {
                 console.log(error);
+                hasBackground = true;
             },
         });
         replaceurl("player=true&input=" + input);
@@ -150,7 +155,9 @@ window.addEventListener("load", function() {
             loud = getRMS(dataArray);
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
             ctx.fillStyle = "#000000";
-            ctx.fillRect(0, 0, WIDTH, HEIGHT);
+            if (hasBackground === true) {
+                ctx.fillRect(0, 0, WIDTH, HEIGHT);
+            }
             let rad = loud / 7;
             gn.gain.setValueAtTime(vol.value / 100, audio.currentTime);
             for (var i = 0; i < bufferLength; i++) {
