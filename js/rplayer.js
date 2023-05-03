@@ -155,9 +155,12 @@ window.addEventListener("load", function() {
             loud = getRMS(dataArray);
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
             ctx.fillStyle = "#000000";
+            ctx.globalAlpha = 0.3;
             if (hasBackground === true) {
-                ctx.fillRect(0, 0, WIDTH, HEIGHT);
+                ctx.globalAlpha = 1;
             }
+            ctx.fillRect(0, 0, WIDTH, HEIGHT);
+            ctx.globalAlpha = 1;
             let rad = loud / 7;
             gn.gain.setValueAtTime(vol.value / 100, audio.currentTime);
             for (var i = 0; i < bufferLength; i++) {
