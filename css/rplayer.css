@@ -16,11 +16,12 @@
 #img2 {
     position:absolute;
     top: 0px;
-    animation: upDown 1.5s alternate infinite ease-in-out;
+    left: 0px;
+    animation: upDown 20s alternate infinite ease-in-out;
     width:100%;
 }
 @keyframes upDown {
-  to { transform: translatey(30%);}
+  to { transform: translatey(80%);}
 }
 #thefile {
     position: fixed;
