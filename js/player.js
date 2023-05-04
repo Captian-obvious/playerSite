@@ -88,6 +88,9 @@ window.addEventListener("load", function() {
         if (album.style.backgroundImage != "url(../../images/default/default-album-icon.png)") {
             album.style.backgroundImage = "url(../../images/default/default-album-icon.png)";
         };
+        if (album2.src != "") {
+            album2.src = "";
+        };
         var hasBackground = true;
         ID3.read(files[0], {
             onSuccess: function(tag) {
