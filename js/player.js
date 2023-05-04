@@ -59,6 +59,7 @@ window.addEventListener("load", function() {
     console.log(audio);
     var dur = document.getElementById("MediaPlayerControl-seekbar");
     var album = document.getElementById("album");
+    var album2 = document.getElementById("img2");
     var dataimage = document.getElementById("MediaPlayerIcon-icon-play");
     var button = document.getElementById("MediaPlayerIcon-icon-play");
     var position = document.getElementById("time-position");
