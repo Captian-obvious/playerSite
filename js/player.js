@@ -103,7 +103,7 @@ window.addEventListener("load", function() {
                     };
                     var url = "data:" + format + ";base64," + window.btoa(str);
                     album.style.backgroundImage = "url(" + url + ")";
-                    album2.style.backgroundImage = "url(" + url + ")";
+                    album2.src = url;
                     hasBackground = false;
                 };
                 if (title != "" && artist != "") {
