@@ -88,10 +88,9 @@ window.addEventListener("load", function() {
         if (album.style.backgroundImage != "url(../../images/default/default-album-icon.png)") {
             album.style.backgroundImage = "url(../../images/default/default-album-icon.png)";
         };
-        if (album2.src != "") {
-            album2.src = "";
+        if (album2.src != "../../images/default/default_background.png") {
+            album2.src = "../../images/default/default_background.png";
         };
-        var hasBackground = true;
         ID3.read(files[0], {
             onSuccess: function(tag) {
                 console.log(tag);
@@ -107,7 +106,6 @@ window.addEventListener("load", function() {
                     var url = "data:" + format + ";base64," + window.btoa(str);
                     album.style.backgroundImage = "url(" + url + ")";
                     album2.src = url;
-                    hasBackground = false;
                 };
                 if (title != "" && artist != "") {
                     filetitle.textContent = artist + " - " + title;
@@ -158,9 +156,6 @@ window.addEventListener("load", function() {
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
             ctx.fillStyle = "#000000";
             ctx.globalAlpha = 0.3;
-            if (hasBackground===true) {
-                ctx.globalAlpha = 1;
-            };
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
             ctx.globalAlpha = 1;
             let rad = loud / 7;
