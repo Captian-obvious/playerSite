@@ -3,6 +3,21 @@
     text-align:center;
     color:#980000;
 }
+#img2 {
+    position:absolute;
+    top: 0px;
+    left: 0px;
+    animation: upDown 20s alternate infinite ease-in-out;
+    width:100%;
+}
+@keyframes upDown {
+    0% {
+        top: 0%;
+    }
+    100% {
+        top: -90%;
+    }
+}
 #file-label {
     position: fixed;
     top: 0px;
