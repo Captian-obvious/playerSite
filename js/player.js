@@ -53,7 +53,7 @@ function calcRMSColor(rms) {
 window.addEventListener("load", function() {
     var file = document.getElementById("thefile");
     var filetitle = document.getElementById("file-label");
-    document.getElementById("media-container").innerHTML = `<canvas id="canvas"></canvas>\n<div id="main">\n    <div id="album">\n        <div id="MediaPlayerControls">\n            <div id="MediaPlayerIcon-icon-play" class="MediaPlayerIcon icon-play" data-mediathumb-url="src"></div>\n            <div id="sound_options" class="MediaPlayerIcon icon-volume">\n                <input id="volume" class="MediaPlayerControl-volume" type="range" max="100" min="0" />\n            </div>\n        </div>\n        <input id="MediaPlayerControl-seekbar" type="range" name="rng" min="0" value="0">\n       <div id="time-position"></div>\n    </div>\n</div>\n <script src="../../js/rangeRunner.js"></script>\n`;
+    document.getElementById("media-container").innerHTML = `<img id="img2"></img>\n<canvas id="canvas"></canvas>\n<div id="main">\n    <div id="album">\n        <div id="MediaPlayerControls">\n            <div id="MediaPlayerIcon-icon-play" class="MediaPlayerIcon icon-play" data-mediathumb-url="src"></div>\n            <div id="sound_options" class="MediaPlayerIcon icon-volume">\n                <input id="volume" class="MediaPlayerControl-volume" type="range" max="100" min="0" />\n            </div>\n        </div>\n        <input id="MediaPlayerControl-seekbar" type="range" name="rng" min="0" value="0">\n       <div id="time-position"></div>\n    </div>\n</div>\n <script src="../../js/rangeRunner.js"></script>\n`;
     replaceurl("player=" + urlParameter);
     var audio = new Audio();
     console.log(audio);
@@ -87,6 +87,7 @@ window.addEventListener("load", function() {
         if (album.style.backgroundImage != "url(../../images/default/default-album-icon.png)") {
             album.style.backgroundImage = "url(../../images/default/default-album-icon.png)";
         };
+        var hasBackground = true;
         ID3.read(files[0], {
             onSuccess: function(tag) {
                 console.log(tag);
@@ -101,6 +102,8 @@ window.addEventListener("load", function() {
                     };
                     var url = "data:" + format + ";base64," + window.btoa(str);
                     album.style.backgroundImage = "url(" + url + ")";
+                    album2.style.backgroundImage = "url(" + url + ")";
+                    hasBackground = false;
                 };
                 if (title != "" && artist != "") {
                     filetitle.textContent = artist + " - " + title;
@@ -150,7 +153,12 @@ window.addEventListener("load", function() {
             loud = getRMS(dataArray);
             ctx.clearRect(0, 0, WIDTH, HEIGHT);
             ctx.fillStyle = "#000000";
+            ctx.globalAlpha = 1;
+            if (hasBackground===true) {
+                ctx.globalAlpha = 0.3;
+            };
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
+            ctx.globalAlpha = 1;
             let rad = loud / 7;
             gn.gain.setValueAtTime(vol.value / 100, audio.currentTime);
             for (var i = 0; i < bufferLength; i++) {
