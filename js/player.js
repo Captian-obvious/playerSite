@@ -76,20 +76,22 @@ window.addEventListener("load", function() {
     };
     file.onchange = function() {
         var files = this.files;
+        var index=0;
         var colorValue = "#ff0000";
         dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[0]));
         var SRC = dataimage.getAttribute("data-mediathumb-url");
         audio.src = SRC;
         audio.load();
         function playNext(audio,i) {
+            if (i===files.length || i > files.length) { return }
             var input = files[i].name;
             dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[0]));
             var SRC = dataimage.getAttribute("data-mediathumb-url");
             audio.src = SRC;
             audio.load();
             var input = files[i].name;
-            if (filetitle.textContent != "Unknown Artist - " + files[0].name) {
-                filetitle.textContent = "Unknown Artist - " + files[0].name;
+            if (filetitle.textContent != "Unknown Artist - " + files[i].name) {
+                filetitle.textContent = "Unknown Artist - " + files[i].name;
             };
             if (album.style.backgroundImage != "url(../../images/default/default-album-icon.png)") {
                 album.style.backgroundImage = "url(../../images/default/default-album-icon.png)";
@@ -251,7 +253,8 @@ window.addEventListener("load", function() {
             audio.addEventListener("ended", function() {
                 button.className = "MediaPlayerIcon icon-play";
                 dur.value = dur.max;
-                playNext(audio,i);
+                index += 1;
+                playNext(audio,index);
             })
         });
         audio.addEventListener("pause", function() {
