@@ -126,9 +126,9 @@ window.addEventListener("load", function() {
                 });
                 replaceurl("player=true&input=" + input);
                 audio.play();
-                setTimeout(5,function(){
+                setTimeout(function(){
                     debounce = true;
-                });
+                },5);
             }
         }
         var input = files[0].name;
