@@ -83,9 +83,9 @@ window.addEventListener("load", function() {
         audio.src = SRC;
         audio.load();
         function playNext(audio,i) {
-            if (i===files.length || i > files.length) { return }
+            if (i===files.length || i > files.length) { i=0 }
             var input = files[i].name;
-            dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[0]));
+            dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[i]));
             var SRC = dataimage.getAttribute("data-mediathumb-url");
             audio.src = SRC;
             audio.load();
