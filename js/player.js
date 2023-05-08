@@ -251,6 +251,7 @@ window.addEventListener("load", function() {
             audio.addEventListener("ended", function() {
                 button.className = "MediaPlayerIcon icon-play";
                 dur.value = dur.max;
+                playNext(audio,i);
             })
         });
         audio.addEventListener("pause", function() {
