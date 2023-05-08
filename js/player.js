@@ -255,7 +255,8 @@ window.addEventListener("load", function() {
                 this.className = "MediaPlayerIcon icon-pause";
                 audio.play();
             };
-            audio.addEventListener("ended", function() {
+        });
+        audio.addEventListener("ended", function() {
                 button.className = "MediaPlayerIcon icon-play";
                 dur.value = dur.max;
                 index += 1;
@@ -263,7 +264,6 @@ window.addEventListener("load", function() {
                     playNext(audio,index);
                 };
             })
-        });
         audio.addEventListener("pause", function() {
             button.className = "MediaPlayerIcon icon-play"
         });
