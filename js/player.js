@@ -83,7 +83,6 @@ window.addEventListener("load", function() {
         audio.src = SRC;
         audio.load();
         function playNext(audio,i) {
-            if (i > files.length) { i=0 }
             var input = files[i].name;
             dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[i]));
             var SRC = dataimage.getAttribute("data-mediathumb-url");
@@ -254,7 +253,9 @@ window.addEventListener("load", function() {
                 button.className = "MediaPlayerIcon icon-play";
                 dur.value = dur.max;
                 index += 1;
-                playNext(audio,index);
+                if (files.length > 1) {
+                    playNext(audio,index);
+                };
             })
         });
         audio.addEventListener("pause", function() {
