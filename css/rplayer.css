@@ -114,6 +114,10 @@
     background-image: url("../images/default/volume_icon.svg");
     left:191px;
 }
+.icon-volume:hover {
+    background-image: url("../images/default/volume_icon_hover.svg");
+    left:191px;
+}
 #volume {
     width: 15px;
     height: 70px;
