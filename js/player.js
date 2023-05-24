@@ -21,6 +21,12 @@ function replaceurl(paramText) {
     }, "", newurl)
 };
 
+function clearArray(array) {
+    while (array.length > 0) {
+        array.pop();
+    }
+}
+
 function animate(myRectangle, canvas, context, startTime) {
     var time = new Date().getTime() - startTime;
     var amplitude = 150;
@@ -76,6 +82,8 @@ window.addEventListener("load", function() {
     };
     file.onchange = function() {
         var files = this.files;
+        clearArray(files)
+        files = this.files
         var index=0;
         var colorValue = "#ff0000";
         dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[0]));
