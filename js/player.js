@@ -81,8 +81,7 @@ window.addEventListener("load", function() {
         return min + ":" + sec
     };
     file.onchange = function() {
-        var files = this.files;
-        clearArray(files)
+        var files = []
         files = this.files
         var index=0;
         var colorValue = "#ff0000";
