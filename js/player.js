@@ -81,8 +81,8 @@ window.addEventListener("load", function() {
         return min + ":" + sec
     };
     file.onchange = function() {
-        var files = []
-        files = this.files
+        var files = [];
+        files = this.files;
         var index=0;
         var colorValue = "#ff0000";
         dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[0]));
