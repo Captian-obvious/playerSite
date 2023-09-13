@@ -103,8 +103,8 @@ window.addEventListener("load", function() {
         var loud = 0;
         var canvas = document.getElementById("canvas");
         var scale = window.devicePixelRatio; 
-        canvas.width = (window.innerWidth*scale);
-        canvas.height = (window.innerHeight*scale);
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         var ctx = canvas.getContext("2d");
         src.connect(analyser);
         var gn = context.createGain();
@@ -126,7 +126,6 @@ window.addEventListener("load", function() {
         var HEIGHT = canvas.height;
         var barWidth = (WIDTH / bufferLength)-1;
         var barHeight;
-        ctx.scale(scale, scale);
         function renderFrame() {
             requestAnimationFrame(renderFrame);
             analyser.getByteFrequencyData(dataArray);
