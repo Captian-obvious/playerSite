@@ -127,7 +127,6 @@ window.addEventListener("load", function() {
         var barHeight;
 
         function renderFrame() {
-            requestAnimationFrame(renderFrame);
             analyser.getByteFrequencyData(dataArray);
             analyser.getByteTimeDomainData(dataArray1);
             var curtime = formatTime(audio.currentTime);
@@ -161,6 +160,7 @@ window.addEventListener("load", function() {
             ctx.fillStyle = "rgb(" + calcRMSColor(loud) + ", " + calcRMSColor(loud) + ",0)";
             ctx.fill();
             ctx.closePath();
+            requestAnimationFrame(renderFrame);
         };
         renderFrame();
         audio.play();
