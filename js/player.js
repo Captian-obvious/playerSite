@@ -143,17 +143,17 @@ window.addEventListener("load", function() {
             gn.gain.setValueAtTime(vol.value / 100, audio.currentTime);
             for (var i = 0; i < bufferLength; i++) {
                 /*barHeight = dataArray[i]*/
-                barHeight = (dataArray[i] / 255) * 200;
+                barHeight = (dataArray[i] / 255) * 250;
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.rotate(90 + i * ((Math.PI * 2) / bufferLength));
-                var r = (barHeight / 200) * 255 + 25 * (i / bufferLength);
+                var r = (barHeight / 250) * 255 + 25 * (i / bufferLength);
                 var g = 250 * (i / bufferLength);
                 var b = 50;
                 ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")"; /*ctx.fillRect(0,0+rad, barWidth, barHeight/4.3)*/
                 ctx.fillRect(0, 0 + rad, barWidth, barHeight);
                 ctx.fillStyle = "rgb(255,255,255)"; /*ctx.fillRect(0,0+rad+barHeight/4.3, barWidth, 1)*/
-                ctx.fillRect(0, 0 + rad + barHeight, barWidth, 1);
+                ctx.fillRect(0, 0 + rad + barHeight, barWidth, 4);
                 ctx.restore();
             };
             ctx.beginPath();
