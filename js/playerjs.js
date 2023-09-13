@@ -104,6 +104,10 @@ window.addEventListener("load", function() {
         var analyser = context.createAnalyser();
         var loud = 0;
         var canvas = document.getElementById("canvas");
+        window.devicePixelRatio=3;
+        var scale = window.devicePixelRatio; 
+        canvas.width = (window.innerWidth*scale);
+        canvas.height = (window.innerHeight*scale);
         var ctx = canvas.getContext("2d");
         src.connect(analyser);
         var gn = context.createGain();
@@ -123,9 +127,9 @@ window.addEventListener("load", function() {
         var maxHeight = canvas.height / 2;
         var WIDTH = canvas.width;
         var HEIGHT = canvas.height;
-        var barWidth = WIDTH / bufferLength;
+        var barWidth = (WIDTH / bufferLength)-1;
         var barHeight;
-
+        ctx.scale(scale, scale);
         function renderFrame() {
             analyser.getByteFrequencyData(dataArray);
             analyser.getByteTimeDomainData(dataArray1);
@@ -146,12 +150,12 @@ window.addEventListener("load", function() {
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.rotate(90 + i * ((Math.PI * 2) / bufferLength));
-                var r = 255;
-                var g = (255 - dataArray[i]);
-                var b = (255 - dataArray[i]);
+                var r = (barHeight / 60) * 255 + 25 * (i / bufferLength);
+                var g = 250 * (i / bufferLength);
+                var b = 50;
                 ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")"; /*ctx.fillRect(0,0+rad, barWidth, barHeight/4.3)*/
                 ctx.fillRect(0, 0 + rad, barWidth, barHeight);
-                ctx.fillStyle = "rgb(255,0,0)"; /*ctx.fillRect(0,0+rad+barHeight/4.3, barWidth, 1)*/
+                ctx.fillStyle = "rgb(255,255,255)"; /*ctx.fillRect(0,0+rad+barHeight/4.3, barWidth, 1)*/
                 ctx.fillRect(0, 0 + rad + barHeight, barWidth, 1);
                 ctx.restore();
             };
