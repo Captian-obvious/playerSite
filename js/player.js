@@ -28,7 +28,7 @@ function calcRMSColor(rms) {
     return ret
 };
 //Main
-window.addEventListener("load",function() {
+window.addEventListener("load",(function() {
     var file=document.getElementById("thefile");
     var filetitle=document.getElementById("file-label");
     var container = document.getElementById('MediaPlayerContainer')
@@ -57,7 +57,7 @@ window.addEventListener("load",function() {
         return min + ":" + sec
     };
     audio.load();
-    file.addEventListener('change', function() {
+    file.addEventListener('change', (function() {
         var files = [];
         files = this.files;
         var index = 0;
@@ -222,5 +222,5 @@ window.addEventListener("load",function() {
             requestAnimationFrame(renderFrame);
         };
         renderFrame();
-    });
-})
+    }));
+}))
