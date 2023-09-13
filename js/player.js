@@ -57,7 +57,7 @@ window.addEventListener("load",(function() {
         return min + ":" + sec
     };
     audio.load();
-    file.addEventListener('change', (function() {
+    file.onchange=function() {
         var files = [];
         files = this.files;
         var index = 0;
@@ -222,5 +222,5 @@ window.addEventListener("load",(function() {
             requestAnimationFrame(renderFrame);
         };
         renderFrame();
-    }));
+    };
 }))
