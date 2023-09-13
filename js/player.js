@@ -7,9 +7,7 @@ var urlParameter = false;
 //FUNCTIONS
 function replaceurl(paramText) {
     var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + paramText;
-    window.history.pushState({
-        path: newurl
-    }, "", newurl)
+    window.history.pushState({path: newurl}, "", newurl)
 };
 
 function getRMS(arr) {
@@ -131,6 +129,7 @@ window.addEventListener("load", function() {
         var barHeight;
         ctx.scale(scale, scale);
         function renderFrame() {
+            requestAnimationFrame(renderFrame);
             analyser.getByteFrequencyData(dataArray);
             analyser.getByteTimeDomainData(dataArray1);
             var curtime = formatTime(audio.currentTime);
@@ -146,11 +145,11 @@ window.addEventListener("load", function() {
             gn.gain.setValueAtTime(vol.value / 100, audio.currentTime);
             for (var i = 0; i < bufferLength; i++) {
                 /*barHeight = dataArray[i]*/
-                barHeight = (dataArray[i] / 255) * 60;
+                barHeight = (dataArray[i] / 255) * 200;
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.rotate(90 + i * ((Math.PI * 2) / bufferLength));
-                var r = (barHeight / 60) * 255 + 25 * (i / bufferLength);
+                var r = (barHeight / 200) * 255 + 25 * (i / bufferLength);
                 var g = 250 * (i / bufferLength);
                 var b = 50;
                 ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")"; /*ctx.fillRect(0,0+rad, barWidth, barHeight/4.3)*/
@@ -164,7 +163,6 @@ window.addEventListener("load", function() {
             ctx.fillStyle = "rgb(" + calcRMSColor(loud) + ", " + calcRMSColor(loud) + ",0)";
             ctx.fill();
             ctx.closePath();
-            requestAnimationFrame(renderFrame);
         };
         renderFrame();
         audio.play();
