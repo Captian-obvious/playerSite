@@ -1,35 +1,15 @@
+//CONSTANTS
 const ID3 = window.jsmediatags
 const sin = Math.sin;
 const π = Math.PI;
+//VARIABLES
 var urlParameter = false;
-
-function ease(t) {
-    return sin((t * π) / 2);
-}
-
-function draw(src) {
-    var myRectangle = new Image();
-    myRectangle.src = src;
-    myRectangle.onload = function() {};
-    return myRectangle;
-};
-
+//FUNCTIONS
 function replaceurl(paramText) {
     var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + paramText;
     window.history.pushState({
         path: newurl
     }, "", newurl)
-};
-
-function animate(myRectangle, canvas, context, startTime) {
-    var time = new Date().getTime() - startTime;
-    var amplitude = 150;
-    var period = 5000;
-    var centerY = canvas.height / 2 - myRectangle.height / 2;
-    var nextY = amplitude * sin((time * 2 * π) / period) + centerY;
-    myRectangle.Y = nextY;
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(myRectangle)
 };
 
 function getRMS(arr) {
@@ -50,6 +30,7 @@ function calcRMSColor(rms) {
     let ret = intermed * 150;
     return ret
 };
+//MAIN
 window.addEventListener("load", function() {
     var file = document.getElementById("thefile");
     var filetitle = document.getElementById("file-label");
