@@ -102,7 +102,6 @@ window.addEventListener("load", function() {
         var analyser = context.createAnalyser();
         var loud = 0;
         var canvas = document.getElementById("canvas");
-        window.devicePixelRatio=3;
         var scale = window.devicePixelRatio; 
         canvas.width = (window.innerWidth*scale);
         canvas.height = (window.innerHeight*scale);
