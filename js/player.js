@@ -139,7 +139,7 @@ window.addEventListener("load", function() {
             ctx.globalAlpha = 0.3;
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
             ctx.globalAlpha = 1;
-            let rad = loud / 7;
+            let rad = loud;
             gn.gain.setValueAtTime(vol.value / 100, audio.currentTime);
             for (var i = 0; i < bufferLength; i++) {
                 /*barHeight = dataArray[i]*/
