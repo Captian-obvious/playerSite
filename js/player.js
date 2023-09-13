@@ -1,9 +1,17 @@
 //CONSTANTS
-const reader = window.jsmediatags
+const ID3 = window.jsmediatags
 const sin = Math.sin;
 const π = Math.PI;
+//VARIABLES
 var urlParameter = false;
 //FUNCTIONS
+function replaceurl(paramText) {
+    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + paramText;
+    window.history.pushState({
+        path: newurl
+    }, "", newurl)
+};
+
 function getRMS(arr) {
     var square = 0;
     var mean = 0;
@@ -17,24 +25,16 @@ function getRMS(arr) {
     return rms
 };
 
-function replaceurl(paramText) {
-    var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + paramText;
-    window.history.pushState({path: newurl}, "", newurl)
-};
-
 function calcRMSColor(rms) {
     let intermed = rms / 100;
     let ret = intermed * 150;
     return ret
 };
-//Main
-window.addEventListener("load",(function() {
-    var file=document.getElementById("thefile");
-    var filetitle=document.getElementById("file-label");
-    var container = document.getElementById('MediaPlayerContainer')
-    container.innerHTML = `
-    <img id="img2"></img>\n<canvas id="canvas"></canvas>\n<div id="main">\n    <div id="album">\n        <div id="MediaPlayerControls">\n            <div id="MediaPlayerIcon-icon-play" class="MediaPlayerIcon icon-play" data-mediathumb-url="src"></div>\n            <div id="sound_options" class="MediaPlayerIcon icon-volume">\n                <input id="volume" class="MediaPlayerControl-volume" type="range" max="100" min="0" />\n            </div>\n        </div>\n        <input id="MediaPlayerControl-seekbar" type="range" name="rng" min="0" value="0">\n       <div id="time-position"></div>\n    </div>\n</div>\n <script src="../../js/rangeRunner.js"></script>\n
-    `
+//MAIN
+window.addEventListener("load", function() {
+    var file = document.getElementById("thefile");
+    var filetitle = document.getElementById("file-label");
+    document.getElementById("media-container").innerHTML = `<img id="img2"></img>\n <canvas id="canvas"></canvas>\n<div id="main">\n    <div id="album">\n        <div id="MediaPlayerControls">\n            <div id="MediaPlayerIcon-icon-play" class="MediaPlayerIcon icon-play" data-mediathumb-url="src"></div>\n            <div id="sound_options" class="MediaPlayerIcon icon-volume">\n                <input id="volume" class="MediaPlayerControl-volume" type="range" max="100" min="0" />\n            </div>\n        </div>\n        <input id="MediaPlayerControl-seekbar" type="range" name="rng" min="0" value="0">\n       <div id="time-position"></div>\n    </div>\n</div>\n <script src="../../js/rangeRunner.js"></script>\n`;
     replaceurl("player=" + urlParameter);
     var audio = new Audio();
     console.log(audio);
@@ -46,7 +46,6 @@ window.addEventListener("load",(function() {
     var position = document.getElementById("time-position");
     var setting = document.getElementById("sound_options");
     var vol = document.getElementById("volume");
-    var debounce = true
 
     function formatTime(val) {
         var min = Math.floor(val / 60);
@@ -56,103 +55,49 @@ window.addEventListener("load",(function() {
         };
         return min + ":" + sec
     };
-    audio.load();
-    file.onchange=function() {
-        var files = [];
-        files = this.files;
-        var index = 0;
+    file.onchange = function() {
+        var files = this.files;
         var colorValue = "#ff0000";
         dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[0]));
         var SRC = dataimage.getAttribute("data-mediathumb-url");
         audio.src = SRC;
         audio.load();
-        dur.addEventListener("change", function() {
-            audio.currentTime = dur.value;
-        });
-        setting.addEventListener("click", function() {
-            if (vol.hidden == true) {
-                vol.hidden = false;
-            } else {
-                vol.hidden = true;
-            }
-        });
-        audio.addEventListener("timeupdate", function() {
-            dur.value = audio.currentTime;
-            dur.max = audio.duration;
-        });
-        button.addEventListener("click", function() {
-            if (this.className == "MediaPlayerIcon icon-pause") {
-                this.className = "MediaPlayerIcon icon-play";
-                audio.pause()
-            } else {
-                this.className = "MediaPlayerIcon icon-pause";
-                audio.play();
-            };
-        });
-        audio.addEventListener("ended", function() {
-            button.className = "MediaPlayerIcon icon-play";
-            dur.value = dur.max;
-            index += 1;
-            if (files.length > 1) {
-                playNext(audio, index);
-            };
-        })
-        audio.addEventListener("pause", function() {
-            button.className = "MediaPlayerIcon icon-play"
-        });
-        audio.addEventListener("play", function() {
-            button.className = "MediaPlayerIcon icon-pause";
-        });
-        function playNext(audio, i) {
-            if (debounce === true) {
-                debounce = false
-                var input = files[i].name;
-                dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[i]));
-                var SRC = dataimage.getAttribute("data-mediathumb-url");
-                audio.src = SRC;
-                audio.load();
-                var input = files[i].name;
-                if (filetitle.textContent != "Unknown Artist - " + files[i].name) {
-                    filetitle.textContent = "Unknown Artist - " + files[i].name;
-                };
-                if (album.style.backgroundImage != "url(../../images/default/default-album-icon.png)") {
-                    album.style.backgroundImage = "url(../../images/default/default-album-icon.png)";
-                };
-                if (album2.src != "../../images/default/default_background.png") {
-                    album2.src = "../../images/default/default_background.png";
-                };
-                reader.read(files[i], {
-                    onSuccess: function(tag) {
-                        console.log(tag);
-                        const data = tag.tags.picture.data;
-                        const format = tag.tags.picture.format;
-                        const title = tag.tags.title;
-                        const artist = tag.tags.artist;
-                        if (data.length != 0 && format != null) {
-                            let str = "";
-                            for (var o = 0; o < data.length; o++) {
-                                str += String.fromCharCode(data[o]);
-                            };
-                            var url = "data:" + format + ";base64," + window.btoa(str);
-                            album.style.backgroundImage = "url(" + url + ")";
-                            album2.src = url;
-                        };
-                        if (title != "" && artist != "") {
-                            filetitle.textContent = artist + " - " + title;
-                        };
-                    },
-                    onError: function(error) {
-                        console.log(error);
-                    },
-                });
-                replaceurl("player=true&input=" + input);
-                audio.play();
-                setTimeout(function() {
-                    debounce = true;
-                }, 100);
-            };
+        var input = files[0].name;
+        if (filetitle.textContent != "Unknown Artist - " + files[0].name) {
+            filetitle.textContent = "Unknown Artist - " + files[0].name;
         };
-        playNext(audio,index)
+        if (album.style.backgroundImage != "url(../../images/default/default-album-icon.png)") {
+            album.style.backgroundImage = "url(../../images/default/default-album-icon.png)";
+        };
+        if (album2.src != "../../images/default/default_background.png") {
+            album2.src = "../../images/default/default_background.png";
+        };
+        ID3.read(files[0], {
+            onSuccess: function(tag) {
+                console.log(tag);
+                const data = tag.tags.picture.data;
+                const format = tag.tags.picture.format;
+                const title = tag.tags.title;
+                const artist = tag.tags.artist;
+                if (data.length != 0 && format != null) {
+                    let str = "";
+                    for (var o = 0; o < data.length; o++) {
+                        str += String.fromCharCode(data[o]);
+                    };
+                    var url = "data:" + format + ";base64," + window.btoa(str);
+                    album.style.backgroundImage = "url(" + url + ")";
+                    album2.src = url;
+                };
+                if (title != "" && artist != "") {
+                    filetitle.textContent = artist + " - " + title;
+                };
+            },
+            onError: function(error) {
+                console.log(error);
+            },
+        });
+        replaceurl("player=true&input=" + input);
+        audio.play();
         var context = new AudioContext();
         console.log(context);
         var src = context.createMediaElementSource(audio);
@@ -222,5 +167,39 @@ window.addEventListener("load",(function() {
             requestAnimationFrame(renderFrame);
         };
         renderFrame();
-    };
-}))
+        audio.play();
+        dur.addEventListener("change", function() {
+            audio.currentTime = dur.value;
+        });
+        setting.addEventListener("click", function() {
+            if (vol.hidden == true) {
+                vol.hidden = false;
+            } else {
+                vol.hidden = true;
+            }
+        });
+        audio.addEventListener("timeupdate", function() {
+            dur.value = audio.currentTime;
+            dur.max = audio.duration;
+        });
+        button.addEventListener("click", function() {
+            if (this.className == "MediaPlayerIcon icon-pause") {
+                this.className = "MediaPlayerIcon icon-play";
+                audio.pause()
+            } else {
+                this.className = "MediaPlayerIcon icon-pause";
+                audio.play();
+            };
+            audio.addEventListener("ended", function() {
+                button.className = "MediaPlayerIcon icon-play";
+                dur.value = dur.max;
+            })
+        });
+        audio.addEventListener("pause", function() {
+            button.className = "MediaPlayerIcon icon-play"
+        });
+        audio.addEventListener("play", function() {
+            button.className = "MediaPlayerIcon icon-pause";
+        })
+    }
+});
