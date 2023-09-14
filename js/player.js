@@ -108,8 +108,6 @@ window.addEventListener("load", function() {
         var ctx = canvas.getContext("2d");
         src.connect(analyser);
         var gn = context.createGain();
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
         analyser.connect(gn);
         gn.connect(context.destination);
         var fft_Size = 512;
@@ -121,12 +119,16 @@ window.addEventListener("load", function() {
         console.log(analyser);
         var dataArray = new Uint8Array(bufferLength);
         var dataArray1 = new Uint8Array(fft_Size);
-        var maxHeight = canvas.height / 2;
-        var WIDTH = canvas.width;
-        var HEIGHT = canvas.height;
-        var barWidth = (WIDTH / bufferLength)-1;
-        var barHeight;
         function renderFrame() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            var maxHeight = canvas.height / 2;
+            var WIDTH = canvas.width;
+            var HEIGHT = canvas.height;
+            var barWidth = (WIDTH / bufferLength)-1;
+            var barHeight;
             requestAnimationFrame(renderFrame);
             analyser.getByteFrequencyData(dataArray);
             analyser.getByteTimeDomainData(dataArray1);
