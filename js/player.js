@@ -1,5 +1,5 @@
 //CONSTANTS
-const ID3 = window.jsmediatags
+const ID3 = window.jsmediatags;
 const sin = Math.sin;
 const π = Math.PI;
 //VARIABLES
@@ -7,7 +7,9 @@ var urlParameter = false;
 //FUNCTIONS
 function replaceurl(paramText) {
     var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + paramText;
-    window.history.pushState({path: newurl}, "", newurl)
+    window.history.pushState({
+        path: newurl
+    }, "", newurl)
 };
 
 function getRMS(arr) {
@@ -32,7 +34,7 @@ function calcRMSColor(rms) {
 window.addEventListener("load", function() {
     var file = document.getElementById("thefile");
     var filetitle = document.getElementById("file-label");
-    document.getElementById("media-container").innerHTML = `<img id="img2"></img>\n <canvas id="canvas"></canvas>\n<div id="main">\n    <div id="album">\n        <div id="MediaPlayerControls">\n            <div id="MediaPlayerIcon-icon-play" class="MediaPlayerIcon icon-play" data-mediathumb-url="src"></div>\n            <div id="sound_options" class="MediaPlayerIcon icon-volume">\n                <input id="volume" class="MediaPlayerControl-volume" type="range" max="100" min="0" />\n            </div>\n        </div>\n        <input id="MediaPlayerControl-seekbar" type="range" name="rng" min="0" value="0">\n       <div id="time-position"></div>\n    </div>\n</div>\n <script src="../../js/rangeRunner.js"></script>\n`;
+    document.getElementById("media-container").innerHTML = `<img id="img2"></img>\n<canvas id="canvas"></canvas>\n<div id="main">\n    <div id="album">\n        <div id="MediaPlayerControls">\n            <div id="MediaPlayerIcon-icon-play" class="MediaPlayerIcon icon-play" data-mediathumb-url="src"></div>\n            <div id="sound_options" class="MediaPlayerIcon icon-volume">\n                <input id="volume" class="MediaPlayerControl-volume" type="range" max="100" min="0" />\n            </div>\n        </div>\n        <input id="MediaPlayerControl-seekbar" type="range" name="rng" min="0" value="0">\n       <div id="time-position"></div>\n    </div>\n</div>\n <script src="../../js/rangeRunner.js"></script>\n`;
     replaceurl("player=" + urlParameter);
     var audio = new Audio();
     console.log(audio);
@@ -44,7 +46,7 @@ window.addEventListener("load", function() {
     var position = document.getElementById("time-position");
     var setting = document.getElementById("sound_options");
     var vol = document.getElementById("volume");
-
+    var debounce = true
     function formatTime(val) {
         var min = Math.floor(val / 60);
         var sec = Math.floor(val - min * 60);
@@ -54,12 +56,63 @@ window.addEventListener("load", function() {
         return min + ":" + sec
     };
     file.onchange = function() {
-        var files = this.files;
+        var files = [];
+        files = this.files;
+        var index=0;
         var colorValue = "#ff0000";
         dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[0]));
         var SRC = dataimage.getAttribute("data-mediathumb-url");
         audio.src = SRC;
         audio.load();
+        function playNext(audio,i) {
+            if (debounce === true) {
+                debounce = false
+                var input = files[i].name;
+                dataimage.setAttribute("data-mediathumb-url", URL.createObjectURL(files[i]));
+                var SRC = dataimage.getAttribute("data-mediathumb-url");
+                audio.src = SRC;
+                audio.load();
+                var input = files[i].name;
+                if (filetitle.textContent != "Unknown Artist - " + files[i].name) {
+                    filetitle.textContent = "Unknown Artist - " + files[i].name;
+                };
+                if (album.style.backgroundImage != "url(../../images/default/default-album-icon.png)") {
+                    album.style.backgroundImage = "url(../../images/default/default-album-icon.png)";
+                };
+                if (album2.src != "../../images/default/default_background.png") {
+                    album2.src = "../../images/default/default_background.png";
+                };
+                ID3.read(files[i], {
+                    onSuccess: function(tag) {
+                        console.log(tag);
+                        const data = tag.tags.picture.data;
+                        const format = tag.tags.picture.format;
+                        const title = tag.tags.title;
+                        const artist = tag.tags.artist;
+                        if (data.length != 0 && format != null) {
+                            let str = "";
+                            for (var o = 0; o < data.length; o++) {
+                                str += String.fromCharCode(data[o]);
+                            };
+                            var url = "data:" + format + ";base64," + window.btoa(str);
+                            album.style.backgroundImage = "url(" + url + ")";
+                            album2.src = url;
+                        };
+                        if (title != "" && artist != "") {
+                            filetitle.textContent = artist + " - " + title;
+                        };
+                    },
+                    onError: function(error) {
+                        console.log(error);
+                    },
+                });
+                replaceurl("player=true&input=" + input);
+                audio.play();
+                setTimeout(function(){
+                    debounce = true;
+                },100);
+            }
+        }
         var input = files[0].name;
         if (filetitle.textContent != "Unknown Artist - " + files[0].name) {
             filetitle.textContent = "Unknown Artist - " + files[0].name;
@@ -124,7 +177,7 @@ window.addEventListener("load", function() {
             canvas.height = window.innerHeight;
             const centerX = canvas.width / 2;
             const centerY = canvas.height / 2;
-            var maxHeight = canvas.height / 2;
+            var maxHeight = canvas.height / 3;
             var WIDTH = canvas.width;
             var HEIGHT = canvas.height;
             var barWidth = (WIDTH / bufferLength)-1;
@@ -188,11 +241,15 @@ window.addEventListener("load", function() {
                 this.className = "MediaPlayerIcon icon-pause";
                 audio.play();
             };
-            audio.addEventListener("ended", function() {
+        });
+        audio.addEventListener("ended", function() {
                 button.className = "MediaPlayerIcon icon-play";
                 dur.value = dur.max;
+                index += 1;
+                if (files.length > 1) {
+                    playNext(audio,index);
+                };
             })
-        });
         audio.addEventListener("pause", function() {
             button.className = "MediaPlayerIcon icon-play"
         });
