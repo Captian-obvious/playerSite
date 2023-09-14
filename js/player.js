@@ -141,15 +141,15 @@ window.addEventListener("load", function() {
             ctx.globalAlpha = 0.3;
             ctx.fillRect(0, 0, WIDTH, HEIGHT);
             ctx.globalAlpha = 1;
-            let rad = loud;
+            let rad = loud/255 * maxHeight;
             gn.gain.setValueAtTime(vol.value / 100, audio.currentTime);
             for (var i = 0; i < bufferLength; i++) {
                 /*barHeight = dataArray[i]*/
-                barHeight = (dataArray[i] / 255) * 250;
+                barHeight = (dataArray[i] / 255) * maxHeight;
                 ctx.save();
                 ctx.translate(centerX, centerY);
                 ctx.rotate(90 + i * ((Math.PI * 2) / bufferLength));
-                var r = (barHeight / 250) * 255 + 25 * (i / bufferLength);
+                var r = (barHeight / maxHeight) * 255 + 25 * (i / bufferLength);
                 var g = 250 * (i / bufferLength);
                 var b = 50;
                 ctx.fillStyle = "rgb(" + r + "," + g + "," + b + ")"; /*ctx.fillRect(0,0+rad, barWidth, barHeight/4.3)*/
