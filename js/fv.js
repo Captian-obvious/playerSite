@@ -1,5 +1,5 @@
 // Constants
-
+const reader = window.jsmediatags
 // Variables
 
 // MAIN
