@@ -1,7 +1,6 @@
 // Constants
 const reader = window.jsmediatags
 // Variables
-
 // MAIN
 var viewer = {
     Initalized: false,
